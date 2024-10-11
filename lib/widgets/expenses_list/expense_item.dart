@@ -11,15 +11,20 @@ class ExpenseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Id: ${expense.id}'),
-            Text('Title: ${expense.title}'),
-            Text('Amount: ${expense.amount}'),
-            Text('Category: ${expense.category}'),
-            Text('Date: ${expense.date}'),
+            Text(expense.title),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Text('\$${expense.amount.toStringAsFixed(2)}'),
+                const Spacer(),
+                Icon(categoryIcon[expense.category]),
+                const SizedBox(width: 4),
+                Text(expense.formattedDate),
+              ],
+            ),
           ],
         ),
       ),
