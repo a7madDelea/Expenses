@@ -41,6 +41,27 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Expenses'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (_) => const SizedBox(
+                  height: 300,
+                  width: double.infinity,
+                  child: Center(
+                    child: Text('Bottm Sheet.'),
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.add),
+          )
+        ],
+      ),
       body: ExpensesList(expenses: expenses),
     );
   }
