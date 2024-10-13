@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../model/expense.dart';
 import '../widgets/expenses_list/expenses_list.dart';
+import '../widgets/new_expense.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,13 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
-                builder: (_) => const SizedBox(
-                  height: 300,
-                  width: double.infinity,
-                  child: Center(
-                    child: Text('Bottm Sheet.'),
-                  ),
-                ),
+                builder: (_) => const NewExpence(),
               );
             },
             icon: const Icon(Icons.add),
