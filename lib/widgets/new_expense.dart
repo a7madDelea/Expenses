@@ -117,7 +117,35 @@ class _NewExpenceState extends State<NewExpence> {
                   child: const Text('Cancel'),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final double? enteredAmount =
+                        double.tryParse(_amountController.text);
+                    final bool amountIsInvalid =
+                        enteredAmount == null || enteredAmount <= 0;
+                    if (_titleController.text.trim().isEmpty ||
+                        amountIsInvalid ||
+                        _selectedDate == null) {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: const Text(
+                            'Error',
+                            style: TextStyle(
+                              color: Color(0xFF8E1717),
+                            ),
+                          ),
+                          content: const Text(
+                              'Please make sure you enter a valid address, amount, date and category.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Ok'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
                   child: const Text('Save Expense'),
                 ),
               ],
