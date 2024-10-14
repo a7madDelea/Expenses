@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../model/expense.dart';
 
-class NewExpence extends StatelessWidget {
+class NewExpence extends StatefulWidget {
   const NewExpence({super.key});
+
+  @override
+  State<NewExpence> createState() => _NewExpenceState();
+}
+
+class _NewExpenceState extends State<NewExpence> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final DateFormat _dateFormat = DateFormat.yMd();
+  Category _selectedCategory = Category.food;
+  DateTime? _selectedDate;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _titleController.dispose();
+    _amountController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +33,22 @@ class NewExpence extends StatelessWidget {
         child: Column(
           children: [
             // Title input.
-            const TextField(
+            TextField(
+              controller: _titleController,
               maxLength: 50,
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 label: Text('Title'),
               ),
             ),
             Row(
               children: [
                 // Amount input.
-                const Expanded(
+                Expanded(
                   child: TextField(
+                    controller: _amountController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         label: Text('Amount'), prefixText: '\$'),
                   ),
                 ),
@@ -38,9 +59,26 @@ class NewExpence extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text('No Date Selected'),
+                      Text(
+                        _selectedDate == null
+                            ? 'No Date Selected'
+                            : _dateFormat.format(_selectedDate!),
+                      ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final DateTime now = DateTime.now();
+                          final DateTime firstDate =
+                              DateTime(now.year - 1, now.month, now.day);
+                          final DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: now,
+                            firstDate: firstDate,
+                            lastDate: now,
+                          );
+                          setState(() {
+                            _selectedDate = pickedDate;
+                          });
+                        },
                         icon: const Icon(Icons.calendar_month),
                       ),
                     ],
@@ -52,6 +90,7 @@ class NewExpence extends StatelessWidget {
             Row(
               children: [
                 DropdownButton(
+                  value: _selectedCategory,
                   items: Category.values
                       .map(
                         (e) => DropdownMenuItem(
@@ -62,11 +101,19 @@ class NewExpence extends StatelessWidget {
                         ),
                       )
                       .toList(),
-                  onChanged: (onChanged) {},
+                  onChanged: (newCategory) {
+                    if (newCategory == null) {
+                      return;
+                    } else {
+                      setState(() {
+                        _selectedCategory = newCategory;
+                      });
+                    }
+                  },
                 ),
                 const Spacer(),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.pop(context),
                   child: const Text('Cancel'),
                 ),
                 ElevatedButton(
