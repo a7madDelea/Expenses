@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../enum/category.dart';
 import '../model/expense.dart';
 
 class NewExpence extends StatefulWidget {

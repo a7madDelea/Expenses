@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../enum/category.dart';
 import '../model/expense.dart';
 import '../widgets/expenses_list/expenses_list.dart';
 import '../widgets/new_expense.dart';
