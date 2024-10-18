@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 import '../model/expense.dart';
 
 class NewExpence extends StatefulWidget {
-  const NewExpence({super.key});
+  const NewExpence({super.key, required this.onAddExpense});
+
+  final Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpence> createState() => _NewExpenceState();
@@ -144,6 +146,16 @@ class _NewExpenceState extends State<NewExpence> {
                           ],
                         ),
                       );
+                    } else {
+                      widget.onAddExpense(
+                        Expense(
+                          title: _titleController.text,
+                          amount: enteredAmount,
+                          date: _selectedDate!,
+                          category: _selectedCategory,
+                        ),
+                      );
+                      Navigator.pop(context);
                     }
                   },
                   child: const Text('Save Expense'),

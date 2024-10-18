@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Expense> expenses = [
+  final List<Expense> _expenses = [
     Expense(
       title: 'Title1',
       amount: 20.3,
@@ -39,6 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
 
+  void _addExpense(Expense expense) {
+    setState(() {
+      _expenses.add(expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,14 +56,16 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
-                builder: (_) => const NewExpence(),
+                builder: (_) => NewExpence(
+                  onAddExpense: _addExpense,
+                ),
               );
             },
             icon: const Icon(Icons.add),
           )
         ],
       ),
-      body: ExpensesList(expenses: expenses),
+      body: ExpensesList(expenses: _expenses),
     );
   }
 }
