@@ -45,6 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _expenses.remove(expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: ExpensesList(expenses: _expenses),
+      body: ExpensesList(
+        expenses: _expenses,
+        onRemoveExpense: _removeExpense,
+      ),
     );
   }
 }
