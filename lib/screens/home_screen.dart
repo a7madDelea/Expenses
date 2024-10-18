@@ -4,6 +4,7 @@ import '../enum/category.dart';
 import '../model/expense.dart';
 import '../widgets/expenses_list/expenses_list.dart';
 import '../widgets/new_expense.dart';
+import '../widgets/chart/chart.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -72,9 +73,16 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: ExpensesList(
-        expenses: _expenses,
-        onRemoveExpense: _removeExpense,
+      body: Column(
+        children: [
+          Chart(expenses: _expenses),
+          Expanded(
+            child: ExpensesList(
+              expenses: _expenses,
+              onRemoveExpense: _removeExpense,
+            ),
+          ),
+        ],
       ),
     );
   }
