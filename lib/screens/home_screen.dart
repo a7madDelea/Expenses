@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Expenses'),
@@ -64,6 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
+                isScrollControlled: true,
+                useSafeArea: true,
                 builder: (_) => NewExpence(
                   onAddExpense: _addExpense,
                 ),
@@ -73,17 +76,34 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Chart(expenses: _expenses),
-          Expanded(
-            child: ExpensesList(
-              expenses: _expenses,
-              onRemoveExpense: _removeExpense,
+      body: width < 500
+          ? Column(
+              children: [
+                Expanded(
+                  child: Chart(expenses: _expenses),
+                ),
+                Expanded(
+                  flex: 2 ,
+                  child: ExpensesList(
+                    expenses: _expenses,
+                    onRemoveExpense: _removeExpense,
+                  ),
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(
+                  child: Chart(expenses: _expenses),
+                ),
+                Expanded(
+                  child: ExpensesList(
+                    expenses: _expenses,
+                    onRemoveExpense: _removeExpense,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
