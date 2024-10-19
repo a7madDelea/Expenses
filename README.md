@@ -1,17 +1,6 @@
-# expenses
-
-Simple application during the learning journey.
-
-## App03
-
-### Home Light Screen:
-![Home Light](assets/homelight.jpg)
-
-### Home Dark Screen:
-![Home Dark](assets/homedark.jpg)
-
-### Form
-![Form](assets/form.jpg)
-
-### Error Dialog
-![Dialog](assets/dialog.jpg)
+<div style="display: flex; flex-direction: row; align-items: center;">
+        <img src="./assets/dialog.jpg" alt="">
+        <img src="./assets/form.jpg" alt="">
+        <img src="./assets/homedark.jpg" alt="">
+        <img src="./assets/homelight.jpg" alt="">
+</div>
