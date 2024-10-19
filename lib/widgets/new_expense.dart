@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 import '../enum/category.dart';
@@ -25,6 +28,48 @@ class _NewExpenceState extends State<NewExpence> {
     super.dispose();
     _titleController.dispose();
     _amountController.dispose();
+  }
+
+  void _showDate() {
+    Platform.isIOS
+        ? showCupertinoDialog(
+            context: context,
+            builder: (_) => CupertinoAlertDialog(
+              title: const Text(
+                'Error',
+                style: TextStyle(
+                  color: Color(0xFF8E1717),
+                ),
+              ),
+              content: const Text(
+                  'Please make sure you enter a valid address, amount, date and category.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Ok'),
+                ),
+              ],
+            ),
+          )
+        : showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: const Text(
+                'Error',
+                style: TextStyle(
+                  color: Color(0xFF8E1717),
+                ),
+              ),
+              content: const Text(
+                  'Please make sure you enter a valid address, amount, date and category.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Ok'),
+                ),
+              ],
+            ),
+          );
   }
 
   @override
@@ -129,25 +174,7 @@ class _NewExpenceState extends State<NewExpence> {
                       if (_titleController.text.trim().isEmpty ||
                           amountIsInvalid ||
                           _selectedDate == null) {
-                        showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                            title: const Text(
-                              'Error',
-                              style: TextStyle(
-                                color: Color(0xFF8E1717),
-                              ),
-                            ),
-                            content: const Text(
-                                'Please make sure you enter a valid address, amount, date and category.'),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text('Ok'),
-                              ),
-                            ],
-                          ),
-                        );
+                        _showDate();
                       } else {
                         widget.onAddExpense(
                           Expense(
